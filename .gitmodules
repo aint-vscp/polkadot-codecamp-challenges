@@ -1,3 +1,6 @@
 [submodule "1-xcm-hyperbridge/hyperbridge-token-bridge/lib/forge-std"]
 	path = 1-xcm-hyperbridge/hyperbridge-token-bridge/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "1-xcm-hyperbridge/hyperbridge-token-bridge/lib/openzeppelin-contracts"]
+	path = 1-xcm-hyperbridge/hyperbridge-token-bridge/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
