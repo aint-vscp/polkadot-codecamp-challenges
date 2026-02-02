@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperbridge Token Bridge</title>
+    <meta name="description" content="Cross-chain token bridge for the Polkadot ecosystem powered by Hyperbridge SDK">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-gradient"></div>
+    
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="14" stroke="url(#gradient1)" stroke-width="2"/>
+                    <path d="M10 16h12M16 10v12" stroke="url(#gradient1)" stroke-width="2" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#E6007A"/>
+                            <stop offset="100%" stop-color="#6D3AEE"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <span class="logo-text">Hyperbridge</span>
+        </div>
+        <button id="connectWallet" class="btn btn-connect">
+            <span class="wallet-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="6" width="20" height="14" rx="2"/>
+                    <path d="M22 10H18a2 2 0 000 4h4"/>
+                </svg>
+            </span>
+            <span id="walletText">Connect Wallet</span>
+        </button>
+    </header>
+
+    <main class="main">
+        <div class="bridge-container">
+            <div class="bridge-header">
+                <h1>Token Bridge</h1>
+                <p>Transfer tokens across chains securely</p>
+            </div>
+
+            <div class="bridge-card">
+                <!-- Network Selection -->
+                <div class="network-row">
+                    <div class="network-box">
+                        <label>From</label>
+                        <select id="sourceChain" class="chain-select">
+                            <option value="paseo">Paseo (Polkadot Hub)</option>
+                            <option value="sepolia">ETH Sepolia</option>
+                            <option value="bsc-testnet">BSC Testnet</option>
+                            <option value="optimism-sepolia">Optimism Sepolia</option>
+                        </select>
+                    </div>
+                    
+                    <button id="swapChains" class="swap-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/>
+                        </svg>
+                    </button>
+                    
+                    <div class="network-box">
+                        <label>To</label>
+                        <select id="destChain" class="chain-select">
+                            <option value="sepolia">ETH Sepolia</option>
+                            <option value="paseo">Paseo (Polkadot Hub)</option>
+                            <option value="bsc-testnet">BSC Testnet</option>
+                            <option value="optimism-sepolia">Optimism Sepolia</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Token Input -->
+                <div class="input-group">
+                    <div class="input-header">
+                        <label>Token</label>
+                        <span class="balance" id="tokenBalance">Balance: --</span>
+                    </div>
+                    <div class="token-input-row">
+                        <select id="tokenSelect" class="token-select">
+                            <option value="">Select Token</option>
+                            <option value="USDC">USDC</option>
+                            <option value="DAI">DAI</option>
+                            <option value="WETH">WETH</option>
+                        </select>
+                        <input type="number" id="tokenAmount" class="amount-input" placeholder="0.0" min="0" step="any">
+                        <button class="max-btn" id="maxBtn">MAX</button>
+                    </div>
+                </div>
+
+                <!-- Recipient -->
+                <div class="input-group">
+                    <label>Recipient Address</label>
+                    <input type="text" id="recipientAddress" class="address-input" placeholder="0x...">
+                    <button class="self-btn" id="selfBtn">Use My Address</button>
+                </div>
+
+                <!-- Fee Estimate -->
+                <div class="fee-section">
+                    <div class="fee-row">
+                        <span>Estimated Fee</span>
+                        <span id="estimatedFee">--</span>
+                    </div>
+                    <div class="fee-row">
+                        <span>Estimated Time</span>
+                        <span id="estimatedTime">~2-5 minutes</span>
+                    </div>
+                </div>
+
+                <!-- Bridge Button -->
+                <button id="bridgeBtn" class="btn btn-bridge" disabled>
+                    <span id="bridgeBtnText">Connect Wallet to Bridge</span>
+                    <div class="spinner" id="spinner" style="display: none;"></div>
+                </button>
+            </div>
+
+            <!-- Transaction Status -->
+            <div class="status-card" id="statusCard" style="display: none;">
+                <div class="status-header">
+                    <h3>Transaction Status</h3>
+                    <span class="status-badge" id="statusBadge">Pending</span>
+                </div>
+                <div class="status-content">
+                    <div class="status-step" id="step1">
+                        <div class="step-icon pending"></div>
+                        <div class="step-info">
+                            <span class="step-title">Initiating Bridge</span>
+                            <span class="step-desc" id="step1Desc">Waiting for transaction...</span>
+                        </div>
+                    </div>
+                    <div class="status-step" id="step2">
+                        <div class="step-icon"></div>
+                        <div class="step-info">
+                            <span class="step-title">Cross-chain Transfer</span>
+                            <span class="step-desc" id="step2Desc">Waiting...</span>
+                        </div>
+                    </div>
+                    <div class="status-step" id="step3">
+                        <div class="step-icon"></div>
+                        <div class="step-info">
+                            <span class="step-title">Completed</span>
+                            <span class="step-desc" id="step3Desc">Waiting...</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="tx-link" id="txLink" target="_blank" style="display: none;">View on Explorer</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Built for Polkadot Codecamp | Powered by Hyperbridge SDK</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "name": "with-nextjs-app",
+  "name": "polkadot-agent-kit-demo",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,16 +12,17 @@
     "@luno-kit/react": "^0.0.10",
     "@luno-kit/ui": "^0.0.10",
     "@tanstack/react-query": "^5.90.3",
+    "next": "15.4.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "15.4.3"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

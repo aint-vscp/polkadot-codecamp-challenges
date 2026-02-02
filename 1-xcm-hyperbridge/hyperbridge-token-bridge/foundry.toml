@@ -3,4 +3,18 @@ src = "src"
 out = "out"
 libs = ["lib"]
 
+# Remappings for Hyperbridge SDK and OpenZeppelin
+remappings = [
+    "@hyperbridge/core/=lib/hyperbridge-sdk/packages/core/contracts/",
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+    "forge-std/=lib/forge-std/src/"
+]
+
+# Solidity version
+solc = "0.8.20"
+
+# Optimizer settings
+optimizer = true
+optimizer_runs = 200
+
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
